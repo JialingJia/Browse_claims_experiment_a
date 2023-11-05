@@ -1,0 +1,11 @@
+joblib==1.2.0
+numpy==1.23.4
+openai==0.27.6
+pandas==1.5.1
+plotly==5.14.1
+Requests==2.31.0
+sentence_transformers==2.2.2
+streamlit==1.26.0
+streamlit_toggle_switch==1.0.2
+streamlit-aggrid==0.3.3
+streamlit_antd_components==0.2.1
