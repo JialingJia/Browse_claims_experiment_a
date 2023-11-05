@@ -129,7 +129,7 @@ df = init_data
 # UI
 st.subheader('Create and add new criterion')
 
-st.info(f'You are going to use GPT-3 to create new criteria to filter claims. Please provide **:red[detailed descriptions of the new criteria]** to GPT-3 so that it helps to preprocess claims that are more likely to match the new criteria.')
+st.info(f'You are going to use ChatGPT to create new criteria to filter claims. Please provide **:red[detailed descriptions of the new criteria]** to ChatGPT so that it helps to preprocess claims that are more likely to match the new criteria.')
 
 def start_GPT():
     st.session_state['time_series'].append({'GPT_edit_prompt': datetime.datetime.now().timestamp()})
