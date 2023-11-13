@@ -437,7 +437,7 @@ st.markdown("""<span style="margin:1em 0px 2em 0px" /> """, unsafe_allow_html=Tr
 pagination = st.container()
 st.markdown("""<span style="margin:1em 0px 2em 0px" /> """, unsafe_allow_html=True)
 # st.markdown("""<br/> <br/>""", unsafe_allow_html=True)
-current_page = sac.pagination(total=len(df_filter_data), page_size=20, align='start', simple=True, show_total=True)
+current_page = sac.pagination(total=len(df_filter_data), page_size=20, align='start', simple=False, show_total=True)
 batch_size = 20
 
 ## render search results
