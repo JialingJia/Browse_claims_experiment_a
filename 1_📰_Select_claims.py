@@ -124,9 +124,21 @@ if 'user_defined_facet_number' not in st.session_state:
     st.session_state.similarity_weight_boolean = True
 
 ## detect feature changes
-def increment_predefined_counter():
+def increment_predefined_counter_verifiable():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp()})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"verifiable"})
+    
+def increment_predefined_counter_false_info():
+    st.session_state['number_slider_change'] += 1
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"false_info"})
+    
+def increment_predefined_counter_general_harm():
+    st.session_state['number_slider_change'] += 1
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"harm"})
+    
+def increment_predefined_counter_public_interest():
+    st.session_state['number_slider_change'] += 1
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"public_interest"})
 
 def increment_similarity_counter():
     st.session_state['number_similiarity_slider_change'] += 1
@@ -261,19 +273,19 @@ with st.sidebar:
 
     col1, col2 = st.columns([6, 1])
     with col1:
-        verifiable = st.checkbox('Verifiable', help="The system helps you rank tweets that are likely to be verifiable at the top.", value=True, on_change=increment_predefined_counter)
+        verifiable = st.checkbox('Verifiable', help="The system helps you rank tweets that are likely to be verifiable at the top.", value=True, on_change=increment_predefined_counter_verifiable)
     with col2:
         if verifiable:
             verifiable_select = st.toggle('', key='verifiable_select', label_visibility='hidden')
     if verifiable:
-        verifiable_weight_slider = st.slider('verifiable', key='verifiable_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter)
+        verifiable_weight_slider = st.slider('verifiable', key='verifiable_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_verifiable)
         if verifiable_select:
             st.session_state.verifiable = False
             draw_graph(df_filter_data, 'verifiable', 'verifiable_numeric')
             if verifiable_weight_slider == 0.00:
                 st.session_state.verifiable = True
             verifiable_slider = st.slider('Select a range of values',0.00, 1.00, (0.00, 1.00), format="%f",
-                                        key='verifiable_slider', disabled=st.session_state.verifiable, label_visibility='collapsed', on_change=increment_predefined_counter)
+                                        key='verifiable_slider', disabled=st.session_state.verifiable, label_visibility='collapsed', on_change=increment_predefined_counter_verifiable)
     else:
         verifiable_weight_slider = 0
         
@@ -281,19 +293,19 @@ with st.sidebar:
     
     col1, col2 = st.columns([6, 1])
     with col1:
-        false_info = st.checkbox('Likely to be false', help="The system helps you rank tweets that are likely to contain false information at the top.", value=True, on_change=increment_predefined_counter)
+        false_info = st.checkbox('Likely to be false', help="The system helps you rank tweets that are likely to contain false information at the top.", value=True, on_change=increment_predefined_counter_false_info)
     with col2:
         if false_info:
             false_info_select = st.toggle('', key='false_info_select', label_visibility='hidden')
     if false_info:
-        false_info_weight_slider = st.slider('false_info', key='false_info_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter)
+        false_info_weight_slider = st.slider('false_info', key='false_info_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_false_info)
         if false_info_select:
             st.session_state.false_info = False
             draw_graph(df_filter_data, 'false_info', 'false_info_numeric')
             if false_info_weight_slider == 0.00:
                 st.session_state.false_info = True
             false_info_slider = st.slider('Select a range of values',0.0, 1.0, (0.0, 1.0), format="%f",
-                                        key='false_info_slider', disabled=st.session_state.false_info, label_visibility='collapsed', on_change=increment_predefined_counter)
+                                        key='false_info_slider', disabled=st.session_state.false_info, label_visibility='collapsed', on_change=increment_predefined_counter_false_info)
     else:
         false_info_weight_slider = 0
     
@@ -301,19 +313,19 @@ with st.sidebar:
     
     col1, col2 = st.columns([6, 1])
     with col1:
-        general_harm = st.checkbox('Likely to cause harm', help="The system helps you rank claims that are likely to cause harm to the society at the top.", value=True, on_change=increment_predefined_counter)
+        general_harm = st.checkbox('Likely to cause harm', help="The system helps you rank claims that are likely to cause harm to the society at the top.", value=True, on_change=increment_predefined_counter_general_harm)
     with col2:
         if general_harm:
             general_harm_select = st.toggle('', key='general_harm_select', label_visibility='hidden')
     if general_harm:
-        general_harm_weight_slider = st.slider('general_harm', key='general_harm_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter)
+        general_harm_weight_slider = st.slider('general_harm', key='general_harm_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_general_harm)
         if general_harm_select:
             st.session_state.general_harm = False
             if general_harm_weight_slider == 0.00:
                 st.session_state.general_harm = True
             draw_graph(df_filter_data, 'general_harm', 'general_harm_numeric')
             general_harm_slider = st.slider('Select a range of values',0.0, 1.0, (0.0, 1.0), format="%f",
-                                        key='general_harm_slider', disabled=st.session_state.general_harm, label_visibility='collapsed', on_change=increment_predefined_counter)
+                                        key='general_harm_slider', disabled=st.session_state.general_harm, label_visibility='collapsed', on_change=increment_predefined_counter_general_harm)
     else:
         general_harm_weight_slider = 0
         
@@ -321,19 +333,19 @@ with st.sidebar:
 
     col1, col2 = st.columns([6, 1])
     with col1:
-        public_interest = st.checkbox('Interest to the public', help="The system helps you rank claims that the public might be more interested in at the top.", value=True, on_change=increment_predefined_counter)
+        public_interest = st.checkbox('Interest to the public', help="The system helps you rank claims that the public might be more interested in at the top.", value=True, on_change=increment_predefined_counter_public_interest)
     with col2:
         if public_interest:
             interest_to_public_select = st.toggle('', key='interest_to_public_select', label_visibility='hidden')
     if public_interest:
-        interest_to_public_weight_slider = st.slider('interest_to_public', key='interest_to_public_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter)
+        interest_to_public_weight_slider = st.slider('interest_to_public', key='interest_to_public_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_public_interest)
         if interest_to_public_select:
             st.session_state.interest_to_public = False
             if interest_to_public_weight_slider == 0.00:
                 st.session_state.interest_to_public = True
             draw_graph(df_filter_data, 'interest_to_public', 'interest_to_public_numeric')
             interest_to_public_slider = st.slider('Select a range of values',0.0, 1.0, (0.0, 1.0), format="%f",
-                                        key='interest_to_public_slider', disabled=st.session_state.interest_to_public, label_visibility='collapsed', on_change=increment_predefined_counter)
+                                        key='interest_to_public_slider', disabled=st.session_state.interest_to_public, label_visibility='collapsed', on_change=increment_predefined_counter_public_interest)
     else:
         interest_to_public_weight_slider = 0 
         
