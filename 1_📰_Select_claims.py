@@ -124,54 +124,74 @@ if 'user_defined_facet_number' not in st.session_state:
     st.session_state.similarity_weight_boolean = True
 
 ## detect feature changes
-def increment_predefined_counter_verifiable():
+def event_verifiable_slider():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"verifiable"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"verifiable", 'score': st.session_state.verifiable_weight})
     
-def increment_predefined_counter_false_info():
+def event_verifiable_slider_check():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"false_info"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"verifiable", 'score': st.session_state.verifiable_check})
     
-def increment_predefined_counter_general_harm():
+def event_false_info_slider():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"harm"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"false_info", 'score': st.session_state.false_info_weight})
     
-def increment_predefined_counter_public_interest():
+def event_false_info_slider_check():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"public_interest"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"false_info", 'score': st.session_state.false_info_check})
     
-def increment_predefined_probability_counter_verifiable():
+def event_general_harm_slider():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"verifiable"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"harm", 'score': st.session_state.general_harm_weight})
     
-def increment_predefined_probability_counter_false_info():
+def event_general_harm_slider_check():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"false_info"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"harm", 'score': st.session_state.general_harm_check})
     
-def increment_predefined_probability_counter_general_harm():
+def event_public_interest_slider():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"harm"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"public_interest", 'score': st.session_state.interest_to_public_weight})
     
-def increment_predefined_probability_counter_public_interest():
+def event_public_interest_slider_check():
     st.session_state['number_slider_change'] += 1
-    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"public_interest"})
+    st.session_state['time_series'].append({'slider': datetime.datetime.now().timestamp(), 'criterion':"public_interest", 'score': st.session_state.public_interest_check})
+    
+def event_verifiable_probability_slider():
+    st.session_state['number_slider_change'] += 1
+    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"verifiable", "max_score":st.session_state.verifiable_slider[1], "min_score":st.session_state.verifiable_slider[0]})
+    
+def event_false_info_probability_slider():
+    st.session_state['number_slider_change'] += 1
+    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"false_info", "max_score":st.session_state.false_info_slider[1], "min_score":st.session_state.false_info_slider[0]})
+    
+def event_general_harm_probability_slider():
+    st.session_state['number_slider_change'] += 1
+    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"harm", "max_score":st.session_state.general_harm_slider[1], "min_score":st.session_state.general_harm_slider[0]})
+    
+def event_public_interest_probability_slider():
+    st.session_state['number_slider_change'] += 1
+    st.session_state['time_series'].append({'probability_slider': datetime.datetime.now().timestamp(), 'criterion':"public_interest", "max_score":st.session_state.interest_to_public_slider[1], "min_score":st.session_state.interest_to_public_slider[0]})
 
-def increment_similarity_counter():
+def event_similarity_slider():
     st.session_state['number_similiarity_slider_change'] += 1
-    st.session_state['time_series'].append({'similarity_slider': datetime.datetime.now().timestamp()})
+    st.session_state['time_series'].append({'similarity_slider': datetime.datetime.now().timestamp(), 'score':st.session_state.query_similarity_weight})
 
-def increment_customized_counter():
+def event_customized_slider():
     st.session_state['number_new_slider_change'] += 1
-    st.session_state['time_series'].append({'customized_slider': datetime.datetime.now().timestamp()})
+    st.session_state['time_series'].append({'customized_slider': datetime.datetime.now().timestamp(), 'score':st.session_state[new_facet + '_weight_slider']})
     
-def increment_customized_probability_counter():
+def event_customized_slider_check():
     st.session_state['number_new_slider_change'] += 1
-    st.session_state['time_series'].append({'probability_customized_slider': datetime.datetime.now().timestamp()})
+    st.session_state['time_series'].append({'customized_slider': datetime.datetime.now().timestamp(), 'score':st.session_state[new_facet + '_check']})
+    
+def event_customized_probability_slider():
+    st.session_state['number_new_slider_change'] += 1
+    st.session_state['time_series'].append({'probability_customized_slider': datetime.datetime.now().timestamp(), "max_score":st.session_state[new_facet + '_slider'][1], "min_score":st.session_state[new_facet + '_slider'][0]})
 
-def increment_search_counter():
+def event_search():
     st.session_state['number_search'] += 1 
     # st.session_state['search_content'].append({'type': query_search ,'query': query})
-    st.session_state['time_series'].append({'search': datetime.datetime.now().timestamp()})
+    st.session_state['time_series'].append({'search': datetime.datetime.now().timestamp(), 'query':st.session_state.query})
 
 ## initiate feature state
 st.session_state.verifiable = True
@@ -268,12 +288,12 @@ df_filter_data['preview'] = 'tweet'
 
 ## search input
 query_search = 'similarity'
-# query_search = st.radio("xx", ('Similarity Search', 'Keyword Search'), horizontal=True, label_visibility='collapsed', on_change=increment_search_counter)
+# query_search = st.radio("xx", ('Similarity Search', 'Keyword Search'), horizontal=True, label_visibility='collapsed', on_change=event_search)
 # query = st_searchbox(
 #     search_wikipedia,
 #     key="wiki_searchbox"
 # )
-query = st.text_input("search:", label_visibility="collapsed", placeholder="Search claims", on_change=increment_search_counter)
+query = st.text_input("search:", label_visibility="collapsed", key='query', placeholder="Search claims", on_change=event_search)
 
 ## sidebar
 with st.sidebar:
@@ -282,7 +302,7 @@ with st.sidebar:
     if query:
         # st.markdown("""<hr style="margin:1em 0px" /> """, unsafe_allow_html=True)
         st.markdown('## Query similarity')
-        similarity_weight_slider = st.slider('Query similarity weight', key='query_similarity_weight', min_value=0.0, value=0.5, max_value=1.0, format="%f", label_visibility='hidden', on_change=increment_similarity_counter)
+        similarity_weight_slider = st.slider('Query similarity weight', key='query_similarity_weight', min_value=0.0, value=0.5, max_value=1.0, format="%f", label_visibility='hidden', on_change=event_similarity_slider)
         df_filter_data = similarity_search(query, df_filter_data)
         df_filter_data['search'] = query
         st.markdown("""<hr style="margin:1em 0px" /> """, unsafe_allow_html=True)
@@ -294,38 +314,38 @@ with st.sidebar:
     # st.markdown("""<hr style="margin:1em 0px" /> """, unsafe_allow_html=True)
     col1, col2 = st.columns([6, 1])
     with col1:
-        verifiable = st.checkbox('Verifiable', help="The system helps you rank tweets that are likely to be verifiable at the top.", value=True)
+        verifiable = st.checkbox('Verifiable', key='verifiable_check', help="The system helps you rank tweets that are likely to be verifiable at the top.", value=True, on_change=event_verifiable_slider_check)
     with col2:
         if verifiable:
             verifiable_select = st.toggle('', key='verifiable_select', label_visibility='hidden')
     if verifiable:
-        verifiable_weight_slider = st.slider('verifiable', key='verifiable_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_verifiable)
+        verifiable_weight_slider = st.slider('verifiable', key='verifiable_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=event_verifiable_slider)
         if verifiable_select:
             st.session_state.verifiable = False
             draw_graph(df_filter_data, 'verifiable', 'verifiable_numeric')
             if verifiable_weight_slider == 0.00:
                 st.session_state.verifiable = True
             verifiable_slider = st.slider('Select a range of values',0.00, 1.00, (0.00, 1.00), format="%f",
-                                        key='verifiable_slider', disabled=st.session_state.verifiable, label_visibility='collapsed', on_change=increment_predefined_probability_counter_verifiable)
+                                        key='verifiable_slider', disabled=st.session_state.verifiable, label_visibility='collapsed', on_change=event_verifiable_probability_slider)
     else:
         verifiable_weight_slider = 0
  
     # st.markdown("""<hr style="margin:1em 0px" /> """, unsafe_allow_html=True)       
     col1, col2 = st.columns([6, 1])
     with col1:
-        false_info = st.checkbox('Likely to be false', help="The system helps you rank tweets that are likely to contain false information at the top.", value=True)
+        false_info = st.checkbox('Likely to be false', key='false_info_check', help="The system helps you rank tweets that are likely to contain false information at the top.", value=True, on_change=event_false_info_slider_check)
     with col2:
         if false_info:
             false_info_select = st.toggle('', key='false_info_select', label_visibility='hidden')
     if false_info:
-        false_info_weight_slider = st.slider('false_info', key='false_info_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_false_info)
+        false_info_weight_slider = st.slider('false_info', key='false_info_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=event_false_info_slider)
         if false_info_select:
             st.session_state.false_info = False
             draw_graph(df_filter_data, 'false_info', 'false_info_numeric')
             if false_info_weight_slider == 0.00:
                 st.session_state.false_info = True
             false_info_slider = st.slider('Select a range of values',0.0, 1.0, (0.0, 1.0), format="%f",
-                                        key='false_info_slider', disabled=st.session_state.false_info, label_visibility='collapsed', on_change=increment_predefined_probability_counter_false_info)
+                                        key='false_info_slider', disabled=st.session_state.false_info, label_visibility='collapsed', on_change=event_false_info_probability_slider)
     else:
         false_info_weight_slider = 0
     
@@ -333,38 +353,38 @@ with st.sidebar:
     
     col1, col2 = st.columns([6, 1])
     with col1:
-        general_harm = st.checkbox('Likely to cause harm', help="The system helps you rank claims that are likely to cause harm to the society at the top.", value=True)
+        general_harm = st.checkbox('Likely to cause harm', key='general_harm_check', help="The system helps you rank claims that are likely to cause harm to the society at the top.", value=True, on_change=event_general_harm_slider_check)
     with col2:
         if general_harm:
             general_harm_select = st.toggle('', key='general_harm_select', label_visibility='hidden')
     if general_harm:
-        general_harm_weight_slider = st.slider('general_harm', key='general_harm_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_general_harm)
+        general_harm_weight_slider = st.slider('general_harm', key='general_harm_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=event_general_harm_slider)
         if general_harm_select:
             st.session_state.general_harm = False
             if general_harm_weight_slider == 0.00:
                 st.session_state.general_harm = True
             draw_graph(df_filter_data, 'general_harm', 'general_harm_numeric')
             general_harm_slider = st.slider('Select a range of values',0.0, 1.0, (0.0, 1.0), format="%f",
-                                        key='general_harm_slider', disabled=st.session_state.general_harm, label_visibility='collapsed', on_change=increment_predefined_probability_counter_general_harm)
+                                        key='general_harm_slider', disabled=st.session_state.general_harm, label_visibility='collapsed', on_change=event_general_harm_probability_slider)
     else:
         general_harm_weight_slider = 0    
     
     # st.markdown("""<hr style="margin:1em 0px" /> """, unsafe_allow_html=True)
     col1, col2 = st.columns([6, 1])
     with col1:
-        public_interest = st.checkbox('Interest to the public', help="The system helps you rank claims that the public might be more interested in at the top.", value=True)
+        public_interest = st.checkbox('Interest to the public', key='public_interest_check', help="The system helps you rank claims that the public might be more interested in at the top.", value=True, on_change=event_public_interest_slider_check)
     with col2:
         if public_interest:
             interest_to_public_select = st.toggle('', key='interest_to_public_select', label_visibility='hidden')
     if public_interest:
-        interest_to_public_weight_slider = st.slider('interest_to_public', key='interest_to_public_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_predefined_counter_public_interest)
+        interest_to_public_weight_slider = st.slider('interest_to_public', key='interest_to_public_weight', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=event_public_interest_slider)
         if interest_to_public_select:
             st.session_state.interest_to_public = False
             if interest_to_public_weight_slider == 0.00:
                 st.session_state.interest_to_public = True
             draw_graph(df_filter_data, 'interest_to_public', 'interest_to_public_numeric')
             interest_to_public_slider = st.slider('Select a range of values',0.0, 1.0, (0.0, 1.0), format="%f",
-                                        key='interest_to_public_slider', disabled=st.session_state.interest_to_public, label_visibility='collapsed', on_change=increment_predefined_probability_counter_public_interest)
+                                        key='interest_to_public_slider', disabled=st.session_state.interest_to_public, label_visibility='collapsed', on_change=event_public_interest_probability_slider)
     else:
         interest_to_public_weight_slider = 0 
     
@@ -382,13 +402,13 @@ with st.sidebar:
             new_facet_check = new_facet + '_check'
             col1, col2 = st.columns([6, 1])
             with col1:
-                new_facet_check = st.checkbox("""{new_facet}""".format(new_facet=item['facet_name'].capitalize()), key=new_facet + '_check', value=True)
+                new_facet_check = st.checkbox("""{new_facet}""".format(new_facet=item['facet_name'].capitalize()), key=new_facet + '_check', value=True, on_change=event_customized_slider_check)
             with col2:
                 if new_facet_check:
                     new_facet_select = st.toggle('', key=new_facet + '_select', label_visibility='hidden')
             # st.write(st.session_state[new_facet + '_check'])
             if st.session_state[new_facet + '_check']:
-                new_facet_weight_slider = st.slider('xx', key=new_facet + '_weight_slider', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=increment_customized_counter)
+                new_facet_weight_slider = st.slider('xx', key=new_facet + '_weight_slider', min_value=0.0, value=0.1, max_value=1.0, format="%f", label_visibility='collapsed', on_change=event_customized_slider)
                 # st.write(new_facet_weight_slider)
                 weight_slider_list.append(st.session_state[new_facet + '_weight_slider'])
                 criteria_list.append(new_facet)
@@ -398,7 +418,7 @@ with st.sidebar:
                         st.session_state[new_facet] = True
                     draw_graph(df_filter_data, new_facet, new_facet + "_prob")
                     new_facet_slider = st.slider('Select a range of values',0.0, 1.0, (0.0, 1.0), format="%f",
-                                            key=new_facet_slider, disabled=st.session_state[new_facet], label_visibility='collapsed', on_change=increment_customized_probability_counter)
+                                            key=new_facet_slider, disabled=st.session_state[new_facet], label_visibility='collapsed', on_change=event_customized_probability_slider)
             else:
                 # new_facet_weight_slider = new_facet + '_weight_slider'
                 st.session_state[new_facet + '_weight_slider'] = 0
@@ -643,4 +663,4 @@ with st.sidebar:
 # st.write("search_query", st.session_state['search_query'])
 
 # st.write(logger)
-# st.write(st.session_state['time_series'])
+st.write(st.session_state['time_series'])
