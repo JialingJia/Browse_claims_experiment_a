@@ -577,7 +577,7 @@ with st.form('my_form'):
         st.session_state['time_series'].append({'selection': datetime.datetime.now().timestamp()})
         selected_claims = grid_table['selected_rows']
         st.session_state['end_time'] = datetime.datetime.now().timestamp()
-        st.session_state['time_series'].append({'end': datetime.datetime.now().timestamp()})
+        st.session_state['time_series'].append({'end': datetime.datetime.now().timestamp(), "selected_claims": selected_claims})
         st.toast('Claims have been successfully selected!', icon="🎉")
         # time.sleep(.5)
         # st.toast('Selected claims are saved in the selection page.')
